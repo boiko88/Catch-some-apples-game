@@ -106,19 +106,21 @@ canvas.create_image(0, 0, anchor=NW, image=forest_img)
 basket_img = PhotoImage(file='basket.png')
 player = canvas.create_image(WIDTH / 2, HEIGHT, anchor=S, image=basket_img)
 canvas.bind_all("<Key>", moving)
-apple_img = PhotoImage(file='apple.png')
+apple_img1 = PhotoImage(file='apple1.png')
+apple_img2 = PhotoImage(file='apple2.png')
+apple_img3 = PhotoImage(file='apple3.png')
 bomb_img = PhotoImage(file='bomb.png')
 heart_img = PhotoImage(file='heart.png')
 
 x = random.randint(13, WIDTH - 13)
 y = 25
-apple1 = canvas.create_image(x, y, anchor=CENTER, image=apple_img)
+apple1 = canvas.create_image(x, y, anchor=CENTER, image=apple_img1)
 
 x = random.randint(13, WIDTH - 13)
-apple2 = canvas.create_image(x, y, anchor=CENTER, image=apple_img)
+apple2 = canvas.create_image(x, y, anchor=CENTER, image=apple_img2)
 
 x = random.randint(13, WIDTH - 13)
-apple3 = canvas.create_image(x, y, anchor=CENTER, image=apple_img)
+apple3 = canvas.create_image(x, y, anchor=CENTER, image=apple_img3)
 
 x = random.randint(13, WIDTH - 13)
 bomb = canvas.create_image(x, y, image=bomb_img)
