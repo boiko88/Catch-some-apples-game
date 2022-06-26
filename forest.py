@@ -16,10 +16,12 @@ canvas = Canvas(window, width=WIDTH, height=HEIGHT, bg='white')
 
 # Text
 score_line = StringVar()
-label = Label(window, textvariable=score_line, font=(
+score_label = Label(window, textvariable=score_line, font=(
     "Helvetica", 24), bg='grey', fg='white')
-score_line.set(f'Score: 0')
-label.pack(side=TOP)
+score_line.set('Score: 0')
+
+
+score_label.pack(side=TOP)
 canvas.pack()
 
 # Functions
@@ -32,12 +34,14 @@ def game_status(apples_count, hearts_count):
         window.configure(bg='pink')
         canvas.create_image(0, 0, anchor=NW, image=forest_img)
         forest_img.configure(file='you_win.png')
+        print_result_you_win()
         game_on = False
     if apples_count <= -1 or hearts_count == 0:
         print("You lose!")
         window.configure(bg='grey')
         canvas.create_image(0, 0, anchor=NW, image=forest_img)
         forest_img.configure(file='you_lose.png')
+        print_result_you_lose()
         game_on = False
 
 
@@ -62,7 +66,7 @@ def check_bomb(bombs):
                 x = random.randint(13, WIDTH - 13)
                 y = -25
                 canvas.coords(bomb, x, y)
-                winsound.PlaySound('boom_sound.wav', winsound.SND_ASYNC)
+                winsound.PlaySound('sounds/boom_sound.wav', winsound.SND_ASYNC)
                 score_line.set(f"Score: {apples_count}")
                 print(f"your hearts count is {hearts_count}")
 
@@ -78,7 +82,7 @@ def check_apples(apples):
                 x = random.randint(13, WIDTH - 13)
                 y = -25
                 canvas.coords(apple, x, y)
-                winsound.PlaySound('score.wav', winsound.SND_ASYNC)
+                winsound.PlaySound('sounds/score.wav', winsound.SND_ASYNC)
                 score_line.set(f"Score: {apples_count}")
 
 
@@ -93,24 +97,40 @@ def check_heart(hearts):
                 x = random.randint(13, WIDTH - 13)
                 y = -25
                 canvas.coords(heart, x, y)
-                winsound.PlaySound('heart.wav', winsound.SND_ASYNC)
+                winsound.PlaySound('sounds/heart.wav', winsound.SND_ASYNC)
                 if hearts_count < 4:
                     hearts_count += 1
                 print(f"Your heart count is {hearts_count}")
 
+def print_result_you_lose():
+    total_score = StringVar()
+    total_score_label = Label(window, textvariable=total_score, font=(
+        "Helvetica", 24), bg='grey', fg='white')
+    total_score.set(f'You lose! Your total score is {apples_count}')
+
+    total_score_label.pack(side=BOTTOM)
+    
+def print_result_you_win():
+    total_score = StringVar()
+    total_score_label = Label(window, textvariable=total_score, font=(
+        "Helvetica", 24), bg='grey', fg='white')
+    total_score.set(f'You win! Your total score is {apples_count}')
+
+    total_score_label.pack(side=BOTTOM)
+
 
 # Images and Engine
 
-forest_img = PhotoImage(file='forest.png')
+forest_img = PhotoImage(file='images/forest.png')
 canvas.create_image(0, 0, anchor=NW, image=forest_img)
-basket_img = PhotoImage(file='basket.png')
+basket_img = PhotoImage(file='images/basket.png')
 player = canvas.create_image(WIDTH / 2, HEIGHT, anchor=S, image=basket_img)
 canvas.bind_all("<Key>", moving)
-apple_img1 = PhotoImage(file='apple1.png')
-apple_img2 = PhotoImage(file='apple2.png')
-apple_img3 = PhotoImage(file='apple3.png')
-bomb_img = PhotoImage(file='bomb.png')
-heart_img = PhotoImage(file='heart.png')
+apple_img1 = PhotoImage(file='images/apple1.png')
+apple_img2 = PhotoImage(file='images/apple2.png')
+apple_img3 = PhotoImage(file='images/apple3.png')
+bomb_img = PhotoImage(file='images/bomb.png')
+heart_img = PhotoImage(file='images/heart.png')
 
 x = random.randint(13, WIDTH - 13)
 y = 25
