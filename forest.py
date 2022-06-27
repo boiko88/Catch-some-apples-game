@@ -5,7 +5,7 @@ import winsound
 
 game_on = True
 apples_count = 0
-hearts_count = 4
+hearts_count = 3
 
 # UI
 window = Tk()
@@ -33,14 +33,14 @@ def game_status(apples_count, hearts_count):
         print("Congratulations! You won!")
         window.configure(bg='pink')
         canvas.create_image(0, 0, anchor=NW, image=forest_img)
-        forest_img.configure(file='you_win.png')
+        forest_img.configure(file='images/you_win.png')
         print_result_you_win()
         game_on = False
     if apples_count <= -1 or hearts_count == 0:
         print("You lose!")
         window.configure(bg='grey')
         canvas.create_image(0, 0, anchor=NW, image=forest_img)
-        forest_img.configure(file='you_lose.png')
+        forest_img.configure(file='images/you_lose.png')
         print_result_you_lose()
         game_on = False
 
@@ -66,7 +66,7 @@ def check_bomb(bombs):
                 x = random.randint(13, WIDTH - 13)
                 y = -25
                 canvas.coords(bomb, x, y)
-                winsound.PlaySound('sounds/boom_sound.wav', winsound.SND_ASYNC)
+                winsound.PlaySound('sounds/boom.wav', winsound.SND_ASYNC)
                 score_line.set(f"Score: {apples_count}")
                 print(f"your hearts count is {hearts_count}")
 
@@ -98,14 +98,14 @@ def check_heart(hearts):
                 y = -25
                 canvas.coords(heart, x, y)
                 winsound.PlaySound('sounds/heart.wav', winsound.SND_ASYNC)
-                if hearts_count < 4:
+                if hearts_count < 3:
                     hearts_count += 1
                 print(f"Your heart count is {hearts_count}")
 
 def print_result_you_lose():
     total_score = StringVar()
     total_score_label = Label(window, textvariable=total_score, font=(
-        "Helvetica", 24), bg='grey', fg='white')
+        "Helvetica", 20), bg='grey', fg='white')
     total_score.set(f'You lose! Your total score is {apples_count}')
 
     total_score_label.pack(side=BOTTOM)
@@ -113,12 +113,13 @@ def print_result_you_lose():
 def print_result_you_win():
     total_score = StringVar()
     total_score_label = Label(window, textvariable=total_score, font=(
-        "Helvetica", 24), bg='grey', fg='white')
+        "Helvetica", 20), bg='grey', fg='white')
     total_score.set(f'You win! Your total score is {apples_count}')
 
     total_score_label.pack(side=BOTTOM)
 
-
+def show_health():
+    pass
 # Images and Engine
 
 forest_img = PhotoImage(file='images/forest.png')
@@ -129,18 +130,22 @@ canvas.bind_all("<Key>", moving)
 apple_img1 = PhotoImage(file='images/apple1.png')
 apple_img2 = PhotoImage(file='images/apple2.png')
 apple_img3 = PhotoImage(file='images/apple3.png')
+apples_list = (apple_img1, apple_img2, apple_img3)
+
+random_apple_image = (apples_list)
+
 bomb_img = PhotoImage(file='images/bomb.png')
 heart_img = PhotoImage(file='images/heart.png')
 
 x = random.randint(13, WIDTH - 13)
 y = 25
-apple1 = canvas.create_image(x, y, anchor=CENTER, image=apple_img1)
+apple1 = canvas.create_image(x, y, anchor=CENTER, image=random.choice(random_apple_image))
 
 x = random.randint(13, WIDTH - 13)
-apple2 = canvas.create_image(x, y, anchor=CENTER, image=apple_img2)
+apple2 = canvas.create_image(x, y, anchor=CENTER, image=random.choice(random_apple_image))
 
 x = random.randint(13, WIDTH - 13)
-apple3 = canvas.create_image(x, y, anchor=CENTER, image=apple_img3)
+apple3 = canvas.create_image(x, y, anchor=CENTER, image=random.choice(random_apple_image))
 
 x = random.randint(13, WIDTH - 13)
 bomb = canvas.create_image(x, y, image=bomb_img)
