@@ -105,7 +105,7 @@ def check_heart(hearts):
 def print_result_you_lose():
     total_score = StringVar()
     total_score_label = Label(window, textvariable=total_score, font=(
-        "Helvetica", 20), bg='grey', fg='white')
+        "Helvetica", 14), bg='grey', fg='white')
     total_score.set(f'You lose! Your total score is {apples_count}')
 
     total_score_label.pack(side=BOTTOM)
@@ -113,14 +113,30 @@ def print_result_you_lose():
 def print_result_you_win():
     total_score = StringVar()
     total_score_label = Label(window, textvariable=total_score, font=(
-        "Helvetica", 20), bg='grey', fg='white')
+        "Helvetica", 14), bg='grey', fg='white')
     total_score.set(f'You win! Your total score is {apples_count}')
 
     total_score_label.pack(side=BOTTOM)
 
-def show_health():
-    pass
+# ***
+
+# def show_health():
+#     global hearts_count
+#     if hearts_count == 3:
+#         canvas.create_image(3, 2, anchor=NW, image=health_img)
+#         health_img.configure(file='images/health3.png')
+#     if hearts_count == 2:
+#         canvas.create_image(1, 1, anchor=NW, image=health_img)
+#         health_img.configure(file='images/health2.png') 
+#     if hearts_count == 1:
+#         canvas.create_image(1, 1, anchor=NW, image=health_img)
+#         health_img.configure(file='images/health1.png') 
+        
+# health_img = PhotoImage()        
+
 # Images and Engine
+
+# ***
 
 forest_img = PhotoImage(file='images/forest.png')
 canvas.create_image(0, 0, anchor=NW, image=forest_img)
@@ -130,6 +146,7 @@ canvas.bind_all("<Key>", moving)
 apple_img1 = PhotoImage(file='images/apple1.png')
 apple_img2 = PhotoImage(file='images/apple2.png')
 apple_img3 = PhotoImage(file='images/apple3.png')
+heart_img = PhotoImage(file='images/heart.png')
 apples_list = (apple_img1, apple_img2, apple_img3)
 
 random_apple_image = (apples_list)
@@ -144,12 +161,14 @@ apple1 = canvas.create_image(x, y, anchor=CENTER, image=random.choice(random_app
 x = random.randint(13, WIDTH - 13)
 apple2 = canvas.create_image(x, y, anchor=CENTER, image=random.choice(random_apple_image))
 
-x = random.randint(13, WIDTH - 13)
+x = random.randint(11, WIDTH - 13)
 apple3 = canvas.create_image(x, y, anchor=CENTER, image=random.choice(random_apple_image))
 
-x = random.randint(13, WIDTH - 13)
+x = random.randint(7, WIDTH - 13)
 bomb = canvas.create_image(x, y, image=bomb_img)
+x = random.randint(2, WIDTH - 13)
 heart = canvas.create_image(x, y, image=heart_img)
+x = random.randint(3, WIDTH - 13)
 
 while game_on:
     canvas.move(apple1, 0, 0.7)
@@ -158,7 +177,7 @@ while game_on:
     canvas.move(bomb, 0, 1.8)
     canvas.move(heart, 0, 1.8)
     window.update()
-    time.sleep(0.006)
+    time.sleep(0.004)
 
     apple1_coords = canvas.coords(apple1)
     if apple1_coords[1] > HEIGHT:
@@ -193,6 +212,7 @@ while game_on:
     check_apples((apple1, apple2, apple3))
     check_bomb(bomb)
     check_heart(heart)
+    #show_health()
     game_status(apples_count, hearts_count)
 
 
